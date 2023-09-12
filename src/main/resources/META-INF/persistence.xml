@@ -18,7 +18,7 @@
             <property name="hibernate.format_sql" value="true"/>
             <!-- 쿼리 주석 -->
             <property name="hibernate.use_sql_comments" value="true"/>
-            <!--<property name="hibernate.hbm2ddl.auto" value="create" />-->
+            <property name="hibernate.hbm2ddl.auto" value="create" />
         </properties>
     </persistence-unit>
 </persistence>

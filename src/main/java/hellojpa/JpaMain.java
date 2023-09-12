@@ -21,11 +21,6 @@ public class JpaMain {
 
         try {
 
-            // JPQL - 테이블 대상이 아닌 객체 대상의 쿼리 = 객체 지향 SQL
-            // SQL 을 추상화해서 특정 데이터베이스 쿼리에 의존하지 않음
-            // 쿼리 직접 작성
-            List result = em.createQuery("select m from Member as m", Member.class)
-                    .getResultList();
 
             // 데이터베이스에 커밋(전달)
             tx.commit();
