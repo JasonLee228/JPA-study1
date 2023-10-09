@@ -27,17 +27,19 @@ public class JpaMain {
 
             Member member = new Member();
             member.setName("member1");
-            member.setTeamId(team.getId());
+            member.setTeam(team);
             em.persist(member);
 
-            // 연관관계가 없기 때문에 특정 유저의 소속 팀 정보를 얻기 위해서는 맴버를 찾고, 다시 팀아이디로 팀을 조회해야 한다.
-            // 또는 조인을 통해 얻어와야 함.
-            // 테이블은 외래 키로 조인을 사용해서 연관된 테이블을 찾는다.
-            // ==> 객체지향스럽지 않음. 객체는 참조를 사용해서 연관된 객체를 찾아야 한다.
-            // member.getTeam(); 이렇게.
+            // 맴버 조회 쿼리를 확인하기 위해 em을 비워준다.
+            em.flush();
+            em.clear();
+
+            // 이전과 저장, 조회 방법이 변경되었다.
+            // 맴버의 팀 키를 통해 팀을 다시 조회하는 것이 아닌 맴버를 통해 팀 정보를 참조를 통해 바로 조회할 수 있다.
+            // 객체 그래프 탐색
             Member findMember = em.find(Member.class, member.getId());
-            Long findMemberTeamId = findMember.getTeamId();
-            Team findTeam = em.find(Team.class, findMemberTeamId);
+            Team findTeam = findMember.getTeam();
+
 
             // 데이터베이스에 커밋(전달)
             tx.commit();
