@@ -31,15 +31,32 @@ public class JpaMain {
             em.persist(member);
 
             // 맴버 조회 쿼리를 확인하기 위해 em을 비워준다.
-            em.flush();
-            em.clear();
+//            em.flush();
+//            em.clear();
 
-            // 이전과 저장, 조회 방법이 변경되었다.
-            // 맴버의 팀 키를 통해 팀을 다시 조회하는 것이 아닌 맴버를 통해 팀 정보를 참조를 통해 바로 조회할 수 있다.
-            // 객체 그래프 탐색
-            Member findMember = em.find(Member.class, member.getId());
-            Team findTeam = findMember.getTeam();
+            Team findTeam = em.find(Team.class, team.getId());
 
+            System.out.println("############### 1 ##############");
+            System.out.println("findTeam = " + findTeam.getName());
+
+            System.out.println();
+            System.out.println();
+
+            System.out.println("############### 2 ##############");
+            System.out.println("## findTeam.getMembers() Run ##");
+
+            List<Member> members = findTeam.getMembers();
+
+            System.out.println();
+            System.out.println();
+            System.out.println("############### 3 ##############");
+
+            int members_size = members.size();
+            System.out.println("members_size = " + members_size);
+            for (Member memberInTeam : members) {
+                System.out.println("memberInTeam = " + memberInTeam.getName());
+            }
+            System.out.println("############## end #############");
 
             // 데이터베이스에 커밋(전달)
             tx.commit();
